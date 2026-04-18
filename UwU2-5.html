@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UwU Studio v2.5 - Full Engine</title>
+    <style>
+        body { background: #000; color: white; margin: 0; padding: 0; font-family: sans-serif; overflow: hidden; }
+        header { padding: 10px; text-align: center; border-bottom: 2px solid #f0f; color: #f0f; text-shadow: 0 0 5px #f0f; font-weight: bold; }
+        
+        .main { margin: 10px; border: 1px solid #0ff; background: #111; position: relative; height: 300px; border-radius: 8px; overflow: hidden; }
+        #line-numbers { position: absolute; left: 0; top: 0; bottom: 0; width: 25px; background: #000; color: #444; font-family: monospace; font-size: 14px; padding-top: 5px; text-align: center; border-right: 1px solid #333; line-height: 20px; }
+        #editor { position: absolute; left: 26px; right: 0; top: 0; bottom: 0; background: transparent; color: #fff; border: none; padding: 5px; font-family: monospace; font-size: 14px; line-height: 20px; outline: none; resize: none; white-space: pre; overflow: auto; }
+        
+        .footer { padding: 0 10px; }
+        button { width: 100%; padding: 12px; background: #000; color: #0ff; border: 1px solid #0ff; border-radius: 20px; font-weight: bold; margin-bottom: 10px; }
+        
+        /* CONSOLE */
+        #console-box { height: 120px; background: #000; border: 1px solid #f0f; padding: 8px; border-radius: 8px; display: flex; flex-direction: column; }
+        #output { flex: 1; font-family: monospace; font-size: 12px; color: #0f0; overflow-y: auto; white-space: pre-wrap; }
+        #input-line { background: transparent; border: none; border-top: 1px solid #333; color: #0ff; font-family: monospace; font-size: 14px; padding: 5px 0; outline: none; display: none; }
+    </style>
+</head>
+<body>
+
+<header>UWU STUDIO v2.5 🚀</header>
+
+<div class="main">
+    <div id="line-numbers">1</div>
+    <textarea id="editor" spellcheck="false" placeholder="Scrivi in UwU Code..."></textarea>
+</div>
+
+<div class="footer">
+    <button onclick="eseguiUwU()">ESEGUI CODICE ⚡</button>
+    <div id="console-box">
+        <div id="output">> Pronto.</div>
+        <input type="text" id="input-line" placeholder="Scrivi qui e premi Invio...">
+    </div>
+</div>
+
+<script>
+    const ed = document.getElementById('editor');
+    const li = document.getElementById('line-numbers');
+    const out = document.getElementById('output');
+    const inp = document.getElementById('input-line');
+
+    let resolver = null;
+
+    // Numeri di riga
+    ed.oninput = () => {
+        const n = ed.value.split('\n').length;
+        li.innerHTML = Array.from({length: n}, (_, i) => i + 1).join('<br>');
+    };
+    ed.onscroll = () => { li.scrollTop = ed.scrollTop; };
+
+    // Funzione RAWR (Input)
+    async function rawr(domanda) {
+        out.innerHTML += "🗨️ " + domanda + "\n";
+        inp.style.display = "block";
+        inp.focus();
+        return new Promise(res => { resolver = res; });
+    }
+
+    // Gestione Invio in console
+    inp.onkeypress = (e) => {
+        if (e.key === 'Enter') {
+            const val = inp.value;
+            out.innerHTML += "<span style='color:#0ff;'> > " + val + "</span>\n";
+            inp.value = "";
+            inp.style.display = "none";
+            if (resolver) resolver(val);
+        }
+    };
+
+    // MOTORE DI TRADUZIONE
+    async function eseguiUwU() {
+        let code = ed.value;
+        out.innerHTML = "> Avvio...\n";
+        
+        const uwu = (msg) => { out.innerHTML += "✨ " + msg + "\n"; };
+
+        // Traduzione comandi dalla tua tabella
+        code = code.replace(/uwu\((.*)\)/g, 'uwu($1)');
+        code = code.replace(/(\w+)\s+OwO\s+(.*)/g, 'let $1 = $2');
+        code = code.replace(/rawr\("(.*)"\)/g, 'await rawr("$1")'); 
+        code = code.replace(/VUV/g, '+');
+        code = code.replace(/is_uwu/g, '===');
+        code = code.replace(/Twue/g, 'true');
+        code = code.replace(/Fawse/g, 'false');
+
+        try {
+            // Esecuzione
+            const func = eval(`(async () => { ${code} })`);
+            await func();
+            out.innerHTML += "\n> Fine.";
+        } catch(e) {
+            out.innerHTML += "\n❌ Errore: " + e.message;
+        }
+    }
+</script>
+
+</body>
+</html>

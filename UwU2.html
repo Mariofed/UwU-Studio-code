@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UwU Studio v2.0</title>
+    <style>
+        body { background-color: #ffeef2; font-family: sans-serif; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .box { background: white; width: 100%; max-width: 900px; border-radius: 20px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); box-sizing: border-box; }
+        h1 { color: #d63384; text-align: center; margin-top: 0; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
+        #editor { 
+            width: 100%; height: 250px; background: #1e1e1e; color: #dcdcaa; 
+            font-family: 'Courier New', monospace; padding: 15px; border: 3px solid #ff85a2; 
+            border-radius: 12px; box-sizing: border-box; font-size: 16px; 
+            white-space: pre; overflow-x: auto; outline: none;
+        }
+        .controls { display: flex; justify-content: center; margin: 20px 0; }
+        button { 
+            background: #ff477e; color: white; border: none; padding: 15px 40px; 
+            font-size: 18px; font-weight: bold; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 71, 126, 0.3);
+        }
+        button:active { transform: scale(0.95); }
+        #console { 
+            width: 100%; height: 200px; background: #252525; color: #4af626; 
+            font-family: 'Courier New', monospace; padding: 15px; border-radius: 12px; 
+            box-sizing: border-box; overflow: auto; border-top: 5px solid #444; font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>🎀 UwU Studio v2.0 🎀</h1>
+    
+    <label>Digita il tuo codice UwU:</label>
+    <textarea id="editor" spellcheck="false" placeholder="Esempio: uwu('ahhh')"></textarea>
+
+    <div class="controls">
+        <button onclick="eseguiCodice()">Esegui (UwU)</button>
+    </div>
+
+    <label>Console di Output:</label>
+    <div id="console"></div>
+</div>
+
+<script>
+    function eseguiCodice() {
+        const codice = document.getElementById('editor').value;
+        const consoleElem = document.getElementById('console');
+        
+        // Puliamo la console
+        consoleElem.innerHTML = "";
+
+        // Cerchiamo i comandi uwu("testo")
+        const regex = /uwu\s*\(\s*"(.*?)"\s*\)/g;
+        let match;
+        let trovato = false;
+
+        while ((match = regex.exec(codice)) !== null) {
+            // QUI IL SIMBOLO ">" È STATO RIMOSSO
+            consoleElem.innerHTML += match[1] + "<br>";
+            trovato = true;
+        }
+
+        if (!trovato && codice.trim() !== "") {
+            consoleElem.innerHTML = "<span style='color: #ff85a2;'>Ewwowe: Usa la sintassi uwu(\"testo\")</span>";
+        }
+    }
+</script>
+
+</body>
+</html>
