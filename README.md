@@ -14,5 +14,4 @@ https://mariofed.github.io/UwU-Studio-code/
 
 ## 💻 Esempio di codice
 ```text
-// Scrivi qui un esempio reale del tuo linguaggio!
 uwu("hello world")
