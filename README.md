@@ -9,8 +9,7 @@
 Un linguaggio di programmazione semplice, amichevole e adatto a chiunque voglia imparare divertendosi.
 
 ## 🚀 Come iniziare
-Per usare UwU-Studio-code, scrivi il tuo primo file `.uwu` e lancialo con:
-https://mariofed.github.io/UwU-Studio-code/
+Per usare UwU-Studio-code, scrivi il tuo primo file `.uwu` ed eseguilo con: esegui codice⚡️
 
 ## 💻 Esempio di codice
 ```text
